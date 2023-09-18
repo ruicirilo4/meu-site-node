@@ -3,15 +3,21 @@
   "builds": [
     {
       "src": "index.html",
-      "use": "@vercel/static-build",
-      "config": {
-        "outputDirectory": "public"
-      }
+      "use": "@vercel/node"
     }
   ],
   "routes": [
-    { "src": "/now-playing", "dest": "/now-playing" },
-    { "src": "/recent-songs", "dest": "/recent-songs" },
-    { "src": "/(.*)", "dest": "/index.html" }
+    {
+      "src": "/now-playing",
+      "dest": "/now-playing"
+    },
+    {
+      "src": "/recent-songs",
+      "dest": "/recent-songs"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
   ]
 }
