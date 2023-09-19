@@ -1,17 +1,15 @@
 {
-  "version": 2,
   "builds": [
-    { "src": "/index.js", "use": "@vercel/node" }
+    {
+      "src": "index.js", 
+      "use": "@vercel/node"
+    }
   ],
   "routes": [
-    { "src": "/api/now-playing", "dest": "/index.js" },
-    { "src": "/api/recent-songs", "dest": "/index.js" },
-    { "src": "/(.*)", "dest": "/index.js" }
-  ],
-  "functions": {
-    "index.js": {
-      "maxDuration": 60
+    {
+      "src": "/(.*)",
+      "dest": "index.js"
     }
-  }
+  ]
 }
 
