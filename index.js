@@ -2,12 +2,13 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import puppeteer from 'puppeteer';
 import express from 'express';
+import axios from 'axios';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
-const port = process.env.PORT || 56189; // Use a porta fornecida pela Vercel ou a porta 3000 como padrão
+const port = process.env.PORT || 56189;
 
 // Crie um array para armazenar as músicas recentes
 const recentSongs = [];
@@ -20,13 +21,17 @@ app.get('/', (req, res) => {
 
 app.get('/now-playing', async (req, res) => {
   try {
+    const response = await axios.get('https://api.allorigins.win/raw?url=https://indie88.com/wp-content/themes/indie88/inc/streamon.php');
+    const html = response.data;
+
     const browser = await puppeteer.launch({
       headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox'], // Configurações adicionais para o Puppeteer no ambiente Vercel
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
     });
     const page = await browser.newPage();
-
-    await page.goto('https://api.allorigins.win/raw?url=https://indie88.com/wp-content/themes/indie88/inc/streamon.php');
+    
+    // Carregue o conteúdo HTML obtido da página
+    await page.setContent(html);
 
     await page.waitForSelector('.cobrp-ticker-info', { timeout: 180000 });
 
@@ -51,7 +56,6 @@ app.get('/now-playing', async (req, res) => {
 
     await browser.close();
 
-    // Envie os dados das músicas recentes como resposta HTTP
     res.send(grabNowPlayingInfo);
   } catch (error) {
     console.error('Error:', error);
@@ -60,16 +64,15 @@ app.get('/now-playing', async (req, res) => {
 });
 
 app.get('/recent-songs', (req, res) => {
-  // Filtrar "-" e strings vazias do array de músicas recentes
   const filteredRecentSongs = recentSongs.filter(
     (song) => song !== '-' && song !== ''
   );
 
-  // Retornar a lista filtrada de músicas recentes
   res.json(filteredRecentSongs);
 });
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
 
