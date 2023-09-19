@@ -1,23 +1,22 @@
 {
   "builds": [
     {
-      "src": "index.js", // O arquivo principal do seu servidor Express
-      "use": "@vercel/node" // Use o ambiente Node.js
+      "src": "index.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
     {
       "src": "/now-playing",
-      "dest": "/index.js" // Roteia solicitações para /now-playing para o arquivo index.js
+      "dest": "/index.js"
     },
     {
       "src": "/recent-songs",
-      "dest": "/index.js" // Roteia solicitações para /recent-songs para o arquivo index.js
+      "dest": "/index.js"
     }
   ],
   "env": {
-    "NODE_ENV": "production" // Define a variável de ambiente NODE_ENV como "production"
+    "NODE_ENV": "production"
   }
 }
 
-  
