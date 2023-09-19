@@ -26,7 +26,7 @@ app.get('/now-playing', async (req, res) => {
     });
     const page = await browser.newPage();
 
-    await page.goto('https://indie88.com/wp-content/themes/indie88/inc/streamon.php');
+    await page.goto('https://api.allorigins.win/raw?url=https://indie88.com/wp-content/themes/indie88/inc/streamon.php');
 
     await page.waitForSelector('.cobrp-ticker-info', { timeout: 180000 });
 
