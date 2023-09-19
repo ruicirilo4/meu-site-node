@@ -1,22 +1,17 @@
 {
+  "version": 2,
   "builds": [
-    {
-      "src": "index.js",
-      "use": "@vercel/node"
-    }
+    { "src": "/index.js", "use": "@vercel/node" }
   ],
   "routes": [
-    {
-      "src": "/now-playing",
-      "dest": "/index.js"
-    },
-    {
-      "src": "/recent-songs",
-      "dest": "/index.js"
-    }
+    { "src": "/api/now-playing", "dest": "/index.js" },
+    { "src": "/api/recent-songs", "dest": "/index.js" },
+    { "src": "/(.*)", "dest": "/index.js" }
   ],
-  "env": {
-    "NODE_ENV": "production"
+  "functions": {
+    "index.js": {
+      "maxDuration": 60
+    }
   }
 }
 
